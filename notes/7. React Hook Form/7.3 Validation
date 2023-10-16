@@ -1,0 +1,29 @@
+## React Hook Form 을 이용한 Validation 1
+
+input 안에 required, minLength 등을 넣어도
+JS 로 검증해줘야 한다. 
+유저가 이런 제약들을 html 에서 삭제하고 올바르지 않은 값들을 보낼 수도 있으니까. 
+
+{...register}, {required: true}를 해줬는데도 form 이 제출된다. 
+왜냐면 form 에 preventEvent 등을 해줘야 한다.
+브라우저에서 form 이 작동하는 원리는 똑같기 때문에. 
+
+그러니 useForm 에서 handleSubmit 함수를 가져와야 한다. 
+handleSubmit은 두개의 인자를 받는 함수인데, 
+
+1. onValid -> form 이 유효할 때만 실행되는 함수 (필수)
+2. onInvalid ->  form 이 유효하지 않을 때 실행되는 함수 (안써도 됨)
+
+
+handleSubmit은 다른 이벤트 함수들을 작성했던 것과 다르게, 
+실행함수를 넣는다. 
+그럼 return 된 인자들이 onSubmit 에 들어가게 됨. (onSubmit)
+
+Validation 이 맞다면 onValid 함수가 실행될거임. 
+
+
+required인 input 을 입력하지 않고 sumit 하려고 하니, 
+알아서 required인 input 에 focusing 해줌. 
+
+
+
