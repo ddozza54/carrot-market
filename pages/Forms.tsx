@@ -11,14 +11,16 @@ export default function Forms() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginForm>();
+  } = useForm<LoginForm>({
+    mode: "onChange",
+  });
   const onValid = (data: LoginForm) => {
     console.log("im valid");
   };
   const onInvaild = (errors: FieldErrors) => {
     console.log(errors);
   };
-
+  console.log(errors);
   return (
     <div>
       <form onSubmit={handleSubmit(onValid, onInvaild)}>
@@ -51,8 +53,9 @@ export default function Forms() {
           })}
           type="text"
           placeholder="E-mail"
+          className={!!errors.email ? "border-red-300" : ""}
         />
-        {errors.email?.message}
+        <span>Error: {errors.email?.message}</span>
       </form>
     </div>
   );
