@@ -7,13 +7,18 @@ interface LoginForm {
 }
 
 export default function Forms() {
-  const { register, handleSubmit } = useForm<LoginForm>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginForm>();
   const onValid = (data: LoginForm) => {
     console.log("im valid");
   };
   const onInvaild = (errors: FieldErrors) => {
     console.log(errors);
   };
+
   return (
     <div>
       <form onSubmit={handleSubmit(onValid, onInvaild)}>
@@ -38,10 +43,16 @@ export default function Forms() {
         <input
           {...register("email", {
             required: true,
+            validate: {
+              notGmail: (value) =>
+                // !value.includes("@gmail.com") ? "" : "Gmail is not allowed",
+                !value.includes("@gmail.com") || "Gmail is not allowed",
+            },
           })}
           type="text"
           placeholder="E-mail"
         />
+        {errors.email?.message}
       </form>
     </div>
   );
