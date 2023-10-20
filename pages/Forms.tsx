@@ -29,16 +29,14 @@ export default function Forms() {
           placeholder="Username"
         />
         <input
-          {...(register("password"),
-          {
+          {...register("password", {
             required: true,
           })}
           type="password"
           placeholder="password"
         />
         <input
-          {...(register("email"),
-          {
+          {...register("email", {
             required: true,
           })}
           type="text"
