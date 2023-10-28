@@ -8,16 +8,16 @@ export default function Enter() {
   const [method, setMethod] = useState<"email" | "phone">("email");
   const onEmailClick = () => setMethod("email");
   const onPhoneClick = () => setMethod("phone");
- const onValid = (data)=>{
-  fetch("/api/users/enter", {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers{
-      "Content-Type": "application/json"
-    }
-  })
- }
- 
+  const onValid = (data) => {
+    fetch("/api/users/enter", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+  }
+
   return (
     <div>
       <h3>Enter to Carrot</h3>
