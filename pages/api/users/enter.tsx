@@ -1,5 +1,4 @@
-import client from '@/libs/server/client';
-import withHandler from '@/libs/server/withHandler';
+import withHandler from '@libs/server/withHandler';
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function handler(
