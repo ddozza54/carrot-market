@@ -1,10 +1,9 @@
-import Enter from "./Enter";
+import Enter from "./enter";
 import Forms from "./Forms";
 
 export default function Home() {
   return (
     <>
-      <Forms />
       <Enter />
       <div className="bg-slate-400 py-10 px-10 grid gap-10 min-h-screen">
         <div className="bg-white p-8 rounded-3xl shadow-md ">
