@@ -8,7 +8,7 @@ export default function Enter() {
   const [method, setMethod] = useState<"email" | "phone">("email");
   const onEmailClick = () => setMethod("email");
   const onPhoneClick = () => setMethod("phone");
-  const onValid = (data) => {
+  const onValid = (data: any) => {
     fetch("/api/users/enter", {
       method: "POST",
       body: JSON.stringify(data),
