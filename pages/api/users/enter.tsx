@@ -1,44 +1,35 @@
 import client from '@libs/server/client';
-import withHandler from '@libs/server/withHandler';
+import withHandler, { ResponseType } from '@libs/server/withHandler';
 import { NextApiRequest, NextApiResponse } from "next";
+
 
 async function handler(
     req: NextApiRequest,
-    res: NextApiResponse
+    res: NextApiResponse<ResponseType>
 ) {
     const { phone, email } = req.body;
-    const playload = phone ? { phone: +phone } : { email };
-    const user = await client.user.upsert({
-        where: {
-            ...playload,
+    const user = phone ? { phone: +phone } : email ? { email } : null;
+    if (!user) return res.status(400).json({ ok: false })
+    const payload = Math.floor(100000 + Math.random() * 90000) + ""
+    const token = await client.token.create({
+        data: {
+            payload,
+            user: {
+                connectOrCreate: {
+                    where: {
+                        ...user,
+                    },
+                    create: {
+                        name: "Anonymous",
+                        ...user,
+                    },
+                },
+            },
         },
-        create: {
-            name: "Anonymous",
-            ...playload
-        },
-        update: {}
+    });
+    return res.json({
+        ok: true
     })
-    console.log(user)
-
-    //     let user;
-    //     if (email) {
-    //         console.log('i got' + email)
-    //         user = await client.user.findUnique({
-    //             where: {
-    //                 email
-    //             }
-    //         })
-    //         if (!user) {
-    //             console.log("NO User")
-    //             user = await client.user.create({
-    //                 data: {
-    //                     name: "Anonymous",
-    //                     email,
-    //                 }
-    //             })
-    //         }
-    //     }
-    //     res.status(200).end();
 }
 
 export default withHandler("POST", handler)
