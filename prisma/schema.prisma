@@ -15,7 +15,7 @@ datasource db {
 // user 가 어떤 모양인지 prisma 에게 알려줌
 model User {
   id        Int      @id @default(autoincrement())
-  phone     BigInt?     @unique
+  phone     String?     @unique
   email     String?  @unique
   name      String
   avatar    String?
@@ -24,7 +24,6 @@ model User {
   tokens Token[]
 }
 
-
 model Token {
   id        Int      @id @default(autoincrement())
   payload   String   @unique
@@ -32,12 +31,4 @@ model Token {
   userId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-model Product{
-id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int
-  
-
 }
