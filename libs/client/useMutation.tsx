@@ -8,6 +8,8 @@ interface UseMutationState<T> {
 
 type UseMutationResult<T> = [(data: any) => void, UseMutationState<T>];
 
+
+//백엔드에 mutation 요청을 보내는 hook
 export default function useMutation<T = any>(url: string): UseMutationResult<T> {
     const [state, setState] = useState<UseMutationState<T>>({
         loading: false,
