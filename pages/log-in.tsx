@@ -20,16 +20,15 @@ interface TokenForm {
 
 interface MutationResult {
   ok: boolean;
+  message?: string;
+  data: {}
 }
 
 const Enter: NextPage = () => {
   const [enter, { loading, data, error }] =
     useMutation<MutationResult>("/api/users/log-in");
-  const [confirmToken, { loading: tokenLoading, data: tokenData }] =
-    useMutation<MutationResult>("/api/users/confirm");
+
   const { register, handleSubmit, reset } = useForm<EnterForm>();
-  const { register: tokenRegister, handleSubmit: tokenHandleSubmit } =
-    useForm<TokenForm>();
   const [method, setMethod] = useState<"email" | "phone">("email");
   const onEmailClick = () => {
     reset();
@@ -43,115 +42,97 @@ const Enter: NextPage = () => {
     if (loading) return;
     enter(validForm);
   };
-  const onTokenValid = (validForm: TokenForm) => {
-    if (tokenLoading) return;
-    confirmToken(validForm);
-  };
+
   const router = useRouter();
   useEffect(() => {
-    if (tokenData?.ok) {
+    data?.message && alert(data.message)
+    if (data?.ok) {
       router.push("/");
     }
-  }, [tokenData, router])
+  }, [data, router])
 
-  console.log(tokenData)
+  console.log('login', data?.ok)
   return (
     <div className="mt-16 px-4">
       <h3 className="text-3xl font-bold text-center">로그인</h3>
       <div className="mt-12">
-        {data?.ok ? (
+
+        <>
+          <div className="flex flex-col items-center">
+            <div className="grid border-b  w-full mt-8 grid-cols-2 ">
+              <button
+                className={cls(
+                  "pb-4 font-medium text-sm border-b-2",
+                  method === "email"
+                    ? " border-lime-500 text-lime-400"
+                    : "border-transparent hover:text-gray-400 text-gray-500"
+                )}
+                onClick={onEmailClick}
+              >
+                Email
+              </button>
+              <button
+                className={cls(
+                  "pb-4 font-medium text-sm border-b-2",
+                  method === "phone"
+                    ? " border-lime-500 text-lime-400"
+                    : "border-transparent hover:text-gray-400 text-gray-500"
+                )}
+                onClick={onPhoneClick}
+              >
+                Phone
+              </button>
+            </div>
+          </div>
           <form
-            onSubmit={tokenHandleSubmit(onTokenValid)}
+            onSubmit={handleSubmit(onValid)}
             className="flex flex-col mt-8 space-y-4"
           >
-            <Input
-              register={tokenRegister("token", {
-                required: true,
-              })}
-              name="token"
-              label="Confirmation Token"
-              type="number"
-              required
-            />
-            <Button text={tokenLoading ? "Loading" : "Confirm Token"} />
-          </form>
-        ) : (
-          <>
-            <div className="flex flex-col items-center">
-              <div className="grid border-b  w-full mt-8 grid-cols-2 ">
-                <button
-                  className={cls(
-                    "pb-4 font-medium text-sm border-b-2",
-                    method === "email"
-                      ? " border-lime-500 text-lime-400"
-                      : "border-transparent hover:text-gray-400 text-gray-500"
-                  )}
-                  onClick={onEmailClick}
-                >
-                  Email
-                </button>
-                <button
-                  className={cls(
-                    "pb-4 font-medium text-sm border-b-2",
-                    method === "phone"
-                      ? " border-lime-500 text-lime-400"
-                      : "border-transparent hover:text-gray-400 text-gray-500"
-                  )}
-                  onClick={onPhoneClick}
-                >
-                  Phone
-                </button>
-              </div>
-            </div>
-            <form
-              onSubmit={handleSubmit(onValid)}
-              className="flex flex-col mt-8 space-y-4"
-            >
-              {method === "email" ? (
-                <Input
-                  register={register("email", {
-                    required: true,
-                  })}
-                  name="email"
-                  label="Email address"
-                  type="email"
-                  required
-                />
-              ) : null}
-              {method === "phone" ? (
-                <Input
-                  register={register("phone")}
-                  name="phone"
-                  label="Phone number"
-                  type="number"
-                  kind="phone"
-                  required
-                />
-              ) : null}
+            {method === "email" ? (
               <Input
-                register={register("password", { required: true })}
-                name='password'
-                label='Password'
-                type='password'
-                kind='text'
+                register={register("email", {
+                  required: true,
+                })}
+                name="email"
+                label="Email address"
+                type="email"
                 required
               />
-              <div className='w-full flex justify-end'>
-                <button
-                  onClick={() => { alert("저런~~") }}
-                  className='text-lime-600 font-bold'>비밀번호를 잊으셨나요?</button>
-              </div>
+            ) : null}
+            {method === "phone" ? (
+              <Input
+                register={register("phone")}
+                name="phone"
+                label="Phone number"
+                type="number"
+                kind="phone"
+                required
+              />
+            ) : null}
+            <Input
+              register={register("password", { required: true })}
+              name='password'
+              label='Password'
+              type='password'
+              kind='text'
+              required
+            />
+            <div className='w-full flex justify-end'>
+              <button
+                onClick={() => { alert("저런~~") }}
+                className='text-lime-600 font-bold'>비밀번호를 잊으셨나요?</button>
+            </div>
 
-              {method === "email" ? (
-                <Button text={loading ? "Loading" : "Login"} />
-              ) : null}
-              {method === "phone" ? (
-                <Button text={loading ? "Loading" : "Login"} />
-              ) : null}
+            {method === "email" ? (
+              <Button text={loading ? "Loading" : "Login"} />
+            ) : null}
+            {method === "phone" ? (
+              <Button text={loading ? "Loading" : "Login"} />
+            ) : null}
 
-            </form>
-          </>
-        )}
+          </form>
+        </>
+
 
         <div className="mt-8">
           <div className="relative">

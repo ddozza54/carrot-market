@@ -9,11 +9,12 @@ async function handler(
     console.log("createAccount", req.body)
 
     const {
+        userName,
         email,
         phone,
         password
     } = req.body;
-    if ((email || phone) || !password) return res.status(400).json({ ok: false });
+    if (!email || !phone || !password) return res.status(400).json({ ok: false });
 
     const user = await client.user.findUnique({
         where: {
@@ -23,10 +24,23 @@ async function handler(
     if (user) {
         return res.status(404).json({
             ok: false,
+            message: "이미 가입된 유저입니다"
         })
     }
+
+    const createdUser = await client.user.create({
+        data: {
+            name: userName,
+            password,
+            email,
+            phone
+        }
+    })
+
     return res.json({
-        ok: true
+        ok: true,
+        message: "회원가입이 완료되었습니다",
+        data: createdUser
     });
 }
 

@@ -5,6 +5,7 @@ interface ItemProps {
     hearts: number;
     id: number;
     image?: string
+    comments?: number
 }
 
 export default function Item({ title, hearts, id, image }: ItemProps) {

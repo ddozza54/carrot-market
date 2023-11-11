@@ -27,20 +27,13 @@ interface MutationResult {
 const CreateAccount: NextPage = () => {
   const [enter, { loading, data, error }] =
     useMutation<MutationResult>("/api/users/create-account");
-  // const [confirmToken, { loading: tokenLoading, data: tokenData }] =
-  //   useMutation<MutationResult>("/api/users/confirm");
   const { register, handleSubmit, reset, formState: { errors } } = useForm<EnterForm>();
-  const { register: tokenRegister, handleSubmit: tokenHandleSubmit } =
-    useForm<TokenForm>();
   const onValid = (validForm: EnterForm) => {
     if (loading) return;
     const agreeCreating = confirm("회원가입 하시겠습니까?");
     agreeCreating ? enter(validForm) : null;
   };
-  // const onTokenValid = (validForm: TokenForm) => {
-  //   if (tokenLoading) return;
-  //   confirmToken(validForm);
-  // };
+
   const router = useRouter();
   useEffect(() => {
     if (data?.ok) {
@@ -48,7 +41,6 @@ const CreateAccount: NextPage = () => {
     }
   }, [data, router])
 
-  // console.log(tokenData)
   return (
     <div className="mt-16 px-4">
       <h3 className="text-3xl font-bold text-center">Create Account</h3>
@@ -100,17 +92,6 @@ const CreateAccount: NextPage = () => {
             kind='text'
             required
           />
-          {/* <Input
-            register={register("passwordCheck", {
-              required: true,
-            })}
-            name='password Confirm'
-            placeholder='Password Confirm'
-            type='password'
-            kind='text'
-            required
-          /> */}
-
           <Button text={loading ? "Loading" : "Create Account"} />
 
         </form>

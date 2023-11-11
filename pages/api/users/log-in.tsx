@@ -4,6 +4,7 @@ import twilio from "twilio";
 import { NextApiRequest, NextApiResponse } from "next";
 import withHandler, { ResponseType } from "@libs/server/withHandler";
 import client from "@libs/server/client";
+import { withApiSession } from '@libs/server/withSession';
 
 async function handler(
     req: NextApiRequest,
@@ -16,24 +17,16 @@ async function handler(
 
     const findUser = email ? await client.user.findUnique({ where: { email } }) : await client.user.findUnique({ where: { phone } })
     console.log(findUser)
-    if (!findUser) return res.status(400).json({ ok: false })
+    if (!findUser) return res.status(400).json({ ok: false, message: "존재하지 않는 사용자 입니다." })
 
     if (password !== findUser.password) return res.status(400).json({ ok: false, message: "비밀번호가 일치하지 않습니다." })
 
-    const payload = Math.floor(100000 + Math.random() * 900000) + "";
-    const token = await client.token.create({
-        data: {
-            payload,
-            user: {
-
-            }
-        },
-    },
-    );
-
-    return res.json({
-        ok: true
+    req.session.user = { id: findUser.id }
+    await req.session.save();
+    return res.status(200).json({
+        ok: true,
+        data: findUser
     });
 }
 
-export default withHandler({ methods: ["POST"], handler, isPrivate: false });
+export default withApiSession(withHandler({ methods: ["POST"], handler, isPrivate: false }));
