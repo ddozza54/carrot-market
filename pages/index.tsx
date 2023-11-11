@@ -14,16 +14,17 @@ interface PostingsResponse {
 export default function Home() {
   const { user, isLoading } = useUser();
   const { data } = useSWR<PostingsResponse>('/api/postings');
-  console.log(data)
   return (
     <>
-      <Link href='/postings/upload'>
-        <span className='w-10 h-10  bg-lime-800 flex justify-center items-center absolute bottom-5 right-5 rounded-md'><BiPlus size="24" color="white" /></span>
-      </Link>
       <Head>
         <title>Home</title>
       </Head>
       <div className="flex flex-col space-y-5 divide-y">
+        {data?.postings.length === 0 &&
+          <div className='flex flex-col'>
+            <span className='py-10 text-center'>게시물이 존재하지 않습니다. 😢</span>
+            <span className='py-10 text-center'>+ 버튼을 눌러 첫번째 게시물을 만들어 보세요!</span>
+          </div>}
         {data?.postings?.map((posting) => (
           <Item
             id={posting.id}
@@ -33,7 +34,9 @@ export default function Home() {
             comments={1}
           />
         ))}
-
+        <Link href='/postings/upload'>
+          <span className='w-10 h-10  bg-lime-800 flex justify-center items-center absolute bottom-5 right-5 rounded-md'><BiPlus size="24" color="white" /></span>
+        </Link>
       </div>
     </>
   );
