@@ -2,32 +2,23 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import client from '@libs/server/client';
 import { withApiSession } from '@libs/server/withSession';
+import postings from '.';
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  if (req.method === 'GET') {
-    const postings = await client.posting.findMany({});
-    res.json({
-      ok: true,
-      postings,
-    });
-  }
-  if (req.method === 'POST') {
-  }
-  const {
-    body: { title, description },
-    session: { user },
-  } = req;
-  const posting = await client.posting.create({
-    data: {
-      title,
-      description,
-      image: 'xx',
+  const { id } = req.query;
+  const posting = await client.posting.findUnique({
+    where: {
+      id: Number(id),
+    },
+    include: {
       user: {
-        connect: {
-          id: user?.id,
+        select: {
+          id: true,
+          name: true,
+          avatar: true,
         },
       },
     },
@@ -36,11 +27,11 @@ async function handler(
     ok: true,
     posting,
   });
+  console.log(posting);
 }
-
 export default withApiSession(
   withHandler({
-    methods: ['GET', 'POST'],
+    methods: ['GET'],
     handler,
   })
 );

@@ -6,10 +6,12 @@ import Input from "@components/input";
 import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/client/utils";
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 interface EnterForm {
   email?: string;
   phone?: string;
+  password?: string;
 }
 
 interface TokenForm {
@@ -22,7 +24,7 @@ interface MutationResult {
 
 const Enter: NextPage = () => {
   const [enter, { loading, data, error }] =
-    useMutation<MutationResult>("/api/users/enter");
+    useMutation<MutationResult>("/api/users/log-in");
   const [confirmToken, { loading: tokenLoading, data: tokenData }] =
     useMutation<MutationResult>("/api/users/confirm");
   const { register, handleSubmit, reset } = useForm<EnterForm>();
@@ -55,7 +57,7 @@ const Enter: NextPage = () => {
   console.log(tokenData)
   return (
     <div className="mt-16 px-4">
-      <h3 className="text-3xl font-bold text-center">Enter to Carrot</h3>
+      <h3 className="text-3xl font-bold text-center">로그인</h3>
       <div className="mt-12">
         {data?.ok ? (
           <form
@@ -76,9 +78,6 @@ const Enter: NextPage = () => {
         ) : (
           <>
             <div className="flex flex-col items-center">
-              <h5 className="text-sm text-gray-500 font-medium">
-                Enter using:
-              </h5>
               <div className="grid border-b  w-full mt-8 grid-cols-2 ">
                 <button
                   className={cls(
@@ -129,12 +128,27 @@ const Enter: NextPage = () => {
                   required
                 />
               ) : null}
+              <Input
+                register={register("password", { required: true })}
+                name='password'
+                label='Password'
+                type='password'
+                kind='text'
+                required
+              />
+              <div className='w-full flex justify-end'>
+                <button
+                  onClick={() => { alert("저런~~") }}
+                  className='text-lime-600 font-bold'>비밀번호를 잊으셨나요?</button>
+              </div>
+
               {method === "email" ? (
-                <Button text={loading ? "Loading" : "Get login link"} />
+                <Button text={loading ? "Loading" : "Login"} />
               ) : null}
               {method === "phone" ? (
-                <Button text={loading ? "Loading" : "Get one-time password"} />
+                <Button text={loading ? "Loading" : "Login"} />
               ) : null}
+
             </form>
           </>
         )}
@@ -149,7 +163,7 @@ const Enter: NextPage = () => {
             </div>
           </div>
           <div className="grid grid-cols-2 mt-2 gap-3">
-            <button className="flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <button onClick={() => alert("준비중인 서비스 입니다")} className="flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
               <svg
                 className="w-5 h-5"
                 aria-hidden="true"
@@ -159,7 +173,7 @@ const Enter: NextPage = () => {
                 <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
               </svg>
             </button>
-            <button className="flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <button onClick={() => alert("준비중인 서비스 입니다.")} className="flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
               <svg
                 className="w-5 h-5"
                 aria-hidden="true"
@@ -176,6 +190,13 @@ const Enter: NextPage = () => {
           </div>
         </div>
       </div>
+      <div className='w-full flex justify-center pt-8'>
+        <span>계정이 없으신가요?</span>
+        <Link href='/create-account' >
+          <span className='text-lime-600 font-bold'>가입하기</span>
+        </Link>
+      </div>
+
     </div>
   );
 };
