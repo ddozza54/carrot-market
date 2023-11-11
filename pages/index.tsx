@@ -13,7 +13,7 @@ interface PostingsResponse {
 
 export default function Home() {
   const { user, isLoading } = useUser();
-  const { data } = useSWR<PostingsResponse>('/api/postings');
+  const { data } = useSWR<PostingsResponse>('/api/tweet');
   return (
     <>
       <Head>
@@ -34,7 +34,7 @@ export default function Home() {
             comments={1}
           />
         ))}
-        <Link href='/postings/upload'>
+        <Link href='/tweet/upload'>
           <span className='w-10 h-10  bg-lime-800 flex justify-center items-center absolute bottom-5 right-5 rounded-md'><BiPlus size="24" color="white" /></span>
         </Link>
       </div>

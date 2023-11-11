@@ -15,7 +15,7 @@ interface PostingDetailResponse {
 
 export default function PostingDetail() {
     const router = useRouter();
-    const { data } = useSWR<PostingDetailResponse>(router.query.id ? `/api/postings/${router.query.id}` : null)
+    const { data } = useSWR<PostingDetailResponse>(router.query.id ? `/api/tweet/${router.query.id}` : null)
     console.log(data)
     return (
         <div>

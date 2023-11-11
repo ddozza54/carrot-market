@@ -10,7 +10,7 @@ interface ItemProps {
 
 export default function Item({ title, hearts, id, image }: ItemProps) {
     return (
-        <Link href={`postings/${id}`}>
+        <Link href={`tweet/${id}`}>
             <h3>{title}</h3>
             <div>
                 <svg

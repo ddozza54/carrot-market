@@ -19,14 +19,14 @@ interface UploadPostingMutation {
 export default function Upload() {
     const router = useRouter();
     const { register, handleSubmit } = useForm<UploadPostingForm>();
-    const [uploadPosting, { loading, data }] = useMutation<UploadPostingMutation>('/api/postings')
+    const [uploadPosting, { loading, data }] = useMutation<UploadPostingMutation>('/api/tweet')
     const onValid = (data: UploadPostingForm) => {
         if (loading) return;
         uploadPosting(data);
     }
     useEffect(() => {
         if (data?.ok) {
-            router.push(`/postings/${data.posting.id}`)
+            router.push(`/tweet/${data.posting.id}`)
         }
     }, [data, router])
     return (
