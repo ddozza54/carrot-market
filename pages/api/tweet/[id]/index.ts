@@ -7,7 +7,10 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const { id } = req.query;
+  const {
+    query: { id },
+    session: { user },
+  } = req;
   const posting = await client.posting.findUnique({
     where: {
       id: Number(id),
@@ -22,11 +25,24 @@ async function handler(
       },
     },
   });
+
+  const isLiked = Boolean(
+    await client.fav.findFirst({
+      where: {
+        postingId: posting?.id,
+        userId: user?.id,
+      },
+      select: {
+        id: true,
+      },
+    })
+  );
+
   res.json({
     ok: true,
     posting,
+    isLiked,
   });
-  console.log(posting);
 }
 export default withApiSession(
   withHandler({
