@@ -15,7 +15,7 @@ async function handler(
 
   const alreadyExists = await client.fav.findFirst({
     where: {
-      postingId: +id?.toString(),
+      postingId: +id?.toString()!,
       userId: user?.id,
     },
   });
@@ -35,7 +35,7 @@ async function handler(
         },
         posting: {
           connect: {
-            id: +id.toString(),
+            id: +id?.toString()!,
           },
         },
       },
