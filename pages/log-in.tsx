@@ -117,11 +117,7 @@ const Enter: NextPage = () => {
               kind='text'
               required
             />
-            <div className='w-full flex justify-end'>
-              <button
-                onClick={() => { alert("저런~~") }}
-                className='text-lime-600 font-bold'>비밀번호를 잊으셨나요?</button>
-            </div>
+
 
             {method === "email" ? (
               <Button text={loading ? "Loading" : "Login"} />
@@ -132,7 +128,11 @@ const Enter: NextPage = () => {
 
           </form>
         </>
-
+        <div className='w-full flex justify-end'>
+          <button
+            onClick={() => { alert("저런~~") }}
+            className='text-lime-600 font-bold'>비밀번호를 잊으셨나요?</button>
+        </div>
 
         <div className="mt-8">
           <div className="relative">
