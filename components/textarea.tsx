@@ -25,8 +25,9 @@ export default function TextArea({
             ) : null}
             <textarea
                 id={name}
+                placeholder="What's on your mind"
                 {...register}
-                className="mt-1 shadow-sm w-full focus:ring-lime`-500 rounded-md border-gray-300 focus:border-lime`-500 "
+                className="mt-1 p-2 shadow-sm w-full border-2 focus:ring-lime-500 rounded-md border-gray-200 focus:border-lime-500 "
                 rows={4}
                 {...rest}
             />
