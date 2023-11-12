@@ -21,16 +21,7 @@ async function handler(
     session: { user },
   } = req;
   const posting = await client.posting.create({
-    data: {
-      title,
-      description,
-      image: 'xx',
-      user: {
-        connect: {
-          id: user?.id,
-        },
-      },
-    },
+    data: {},
   });
   res.json({
     ok: true,
