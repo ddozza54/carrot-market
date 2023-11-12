@@ -14,6 +14,7 @@ interface PostingsResponse {
 export default function Home() {
   const { user, isLoading } = useUser();
   const { data } = useSWR<PostingsResponse>('/api/tweet');
+  console.log(user, isLoading)
   return (
     <>
       <Head>
@@ -30,8 +31,11 @@ export default function Home() {
             id={posting.id}
             key={posting.id}
             title={posting.title}
+            description={posting.description}
+            createAt={posting.createdAt}
             hearts={1}
             comments={1}
+            userName={user?.name}
           />
         ))}
         <Link href='/tweet/upload'>
