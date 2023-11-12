@@ -33,10 +33,10 @@ export default function Upload() {
     }, [data, router])
     return (
         <div className='px-3'>
-            <h2 className='font-bold text-xl'>Create Post</h2>
-            <div className='flex items-center'>
+            <h2 className='font-bold text-3xl py-8'>Create Posting</h2>
+            <div className='flex items-center pb-4'>
                 <div className='w-10 h-10 rounded-full bg-lime-400'></div>
-                <span>{user?.name}</span>
+                <span className='pl-2 font-bold text-lime-800'>{user?.name.toUpperCase()}</span>
             </div>
             <form onSubmit={handleSubmit(onValid)}>
                 <Input
@@ -45,12 +45,11 @@ export default function Upload() {
                     kind='text'
                     type='text'
                     placeholder='title'
-                    label='Title'
                     name='title' />
                 <TextArea
                     register={register("description", { required: true })}
                     name='description'
-                     />
+                />
                 <Button text={loading ? "Loading..." : "Posting"} />
             </form>
 

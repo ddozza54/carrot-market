@@ -5,6 +5,8 @@ import useUser from '@libs/client/useUser';
 import useSWR from 'swr';
 import Item from '@components/item';
 import { Posting } from '@prisma/client';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 interface PostingWithFav extends Posting {
   _count: { favs: number }
@@ -17,7 +19,13 @@ interface PostingsResponse {
 
 export default function Home() {
   const { user, isLoading } = useUser();
-  const { data } = useSWR<PostingsResponse>('/api/tweet');
+  const { data, error } = useSWR<PostingsResponse>('/api/tweet');
+  const router = useRouter();
+  useEffect(() => {
+    if (error) {
+      router.push('/before-login')
+    }
+  })
   return (
     <>
       <Head>
