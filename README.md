@@ -23,6 +23,7 @@ npm run dev
 
 * 0.0.1
     * 캐럿마켓 챌린지 최소 졸업 요건에 맞춘 기능 구현
+    * 배포된 페이지에서 기능이 정상작동하지 않습니다. 
 
 <br/>
 
@@ -68,10 +69,11 @@ npm run dev
 
 - 아이디가 없는 경우 다음과 같은 알람이 나옵니다.
   
-- <img src="https://github.com/ddozza54/carrot-market/assets/100435210/6ffe00af-e41a-4819-8679-bde5a80b06f2" width="340"/>
+<img src="https://github.com/ddozza54/carrot-market/assets/100435210/6ffe00af-e41a-4819-8679-bde5a80b06f2" width="340"/>
 
 - 아이디는 존재하지만, 비밀번호가 일치하지 않으면 다음과 같은 알람이 나옵니다.
-  <img src="https://github.com/ddozza54/carrot-market/assets/100435210/b6408605-8266-4939-ad0a-1ed6e74f3c65" width="340"/>
+  
+<img src="https://github.com/ddozza54/carrot-market/assets/100435210/b6408605-8266-4939-ad0a-1ed6e74f3c65" width="340"/>
 
 <br/>
 
@@ -81,12 +83,12 @@ npm run dev
 
 - 유저, title, 트윗 내용을 확인할 수 있습니다. 
 
-- 트윗 내용을 클릭 시 트윗 상세 페이지(/tweet/id" width="340"/>로 이동합니다. 
+- 트윗 내용을 클릭 시 트윗 상세 페이지(/tweet/id)로 이동합니다. 
 
 <img src="https://github.com/ddozza54/carrot-market/assets/100435210/0914dc51-4394-49fe-9199-800fe733480e" width="340"/>
 
 
-- + 버튼 클릭 시 트윗을 작성할 수 있습니다.
+- +버튼 클릭 시 트윗을 작성할 수 있습니다.
 
 <img src="https://github.com/ddozza54/carrot-market/assets/100435210/5cc26e88-cec5-49ec-a7ac-06e0377f3bbf" width="120"/>
 
