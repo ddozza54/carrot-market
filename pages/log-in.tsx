@@ -46,10 +46,10 @@ const Enter: NextPage = () => {
   const router = useRouter();
   useEffect(() => {
     data?.message && alert(data.message)
-    if (data?.ok) {
+    if (data?.ok && !loading) {
       router.push("/");
     }
-  }, [data, router])
+  }, [data])
 
   console.log('login', data?.ok)
   return (
