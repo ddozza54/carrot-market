@@ -14,7 +14,7 @@ interface ItemProps {
     createAt: Date;
 }
 
-export default function Item({ title, hearts, id, createAt, image, description, userName }: ItemProps) {
+export default function Item({ title, hearts, id, createAt, image, description, userName, comments }: ItemProps) {
     const [year, month, date] = createAt.toString().slice(0, 10).split("-");
     const ICON_SIZE = 20;
     return (
@@ -43,14 +43,18 @@ export default function Item({ title, hearts, id, createAt, image, description, 
                             <span className='ml-1 text-zinc-600 font-bold text-lg'>{hearts}</span>
                         </div>
                         <div className='flex items-center'>
-                            <FaRegComment size={ICON_SIZE} />
-                            <span className='ml-1 text-zinc-600 font-bold text-lg'>{hearts}</span>
+                            <Link href={`/tweet/${id}`}>
+                                <FaRegComment size={ICON_SIZE} />
+                            </Link>
+                            <span className='ml-1 text-zinc-600 font-bold text-lg'>{comments}</span>
                         </div>
-                        <div className='flex items-center'>
+                        <div onClick={() => alert("준비중인 서비스 입니다.")} className='flex items-center'>
                             <FiRepeat size={ICON_SIZE} />
-                            <span className='ml-1 text-zinc-600 font-bold text-lg'>{hearts}</span>
+                            <span className='ml-1 text-zinc-600 font-bold text-lg'>retweet Count</span>
                         </div>
-                        <FiShare size={ICON_SIZE} />
+                        <div onClick={() => alert("준비중인 서비스 입니다.")}>
+                            <FiShare size={ICON_SIZE} />
+                        </div>
                     </div>
                 </div>
             </div>
