@@ -9,6 +9,8 @@ import { BiArrowBack } from 'react-icons/bi'
 import { FiRepeat, FiShare } from 'react-icons/fi'
 import { FaRegComment } from 'react-icons/fa6'
 import Head from 'next/head';
+import Input from '@components/input';
+import { useForm } from 'react-hook-form';
 
 interface PostingWithUser extends Posting {
     user: User;
@@ -26,6 +28,7 @@ interface PostingDetailResponse {
 
 export default function PostingDetail() {
     const router = useRouter();
+    const { handleSubmit, register } = useForm();
     const { mutate } = useSWRConfig();
     const { data, mutate: boundMutate } = useSWR<PostingDetailResponse>(
         router.query.id ? `/api/tweet/${router.query.id}` : null);
@@ -35,13 +38,16 @@ export default function PostingDetail() {
         boundMutate((prev) => prev && { ...prev, isLiked: !prev.isLiked }, false);
         toggleFav({})
     }
+    const onSubmit = (data) => {
+        console.log(data)
+    }
     const ICON_SIZE = 30;
     return (
         <>
             <Head>
                 <title>{data?.posting.title}</title>
             </Head>
-            <div className='w-full p-3'>
+            <div className='w-full h-4/5 p-3 flex flex-col justify-stretch'>
 
                 <div className='pb-3'>
                     <BiArrowBack size={30} />
@@ -99,7 +105,14 @@ export default function PostingDetail() {
                     </div>
                 </div>
             </div>
-
+            <form
+                className='p-2'
+                onSubmit={handleSubmit(onSubmit)}>
+                <input
+                    className='p-2 border-2 rounded-lg w-full'
+                    placeholder={`${data?.posting.user.name}님에게 답글 남기기`}
+                    type='text' {...register("reply", { required: true })} />
+            </form>
         </>
     );
 }
