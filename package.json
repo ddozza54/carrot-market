@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build":"prisma generate && next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -19,7 +19,8 @@
     "react-icons": "^4.11.0",
     "react-router-dom": "^6.18.0",
     "swr": "^2.2.4",
-    "twilio": "^4.19.0"
+    "twilio": "^4.19.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/node": "20.5.9",
