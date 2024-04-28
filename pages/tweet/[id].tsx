@@ -38,8 +38,8 @@ export default function PostingDetail() {
         boundMutate((prev) => prev && { ...prev, isLiked: !prev.isLiked }, false);
         toggleFav({})
     }
-    const onSubmit = (data) => {
-        console.log(data)
+    const onSubmit = (data: { reply?: string }) => {
+        console.log("data", data)
     }
     const ICON_SIZE = 30;
     return (
