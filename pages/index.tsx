@@ -23,7 +23,11 @@ export default function Home() {
   const router = useRouter();
   useEffect(() => {
     if (error) {
+      console.log('error가 있다!', error)
       router.push('/before-login')
+    }
+    if (data) {
+      console.log('data가 있다!', data)
     }
   })
   return (

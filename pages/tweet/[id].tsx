@@ -1,6 +1,5 @@
 import useMutation from '@libs/client/useMutation';
 import { Posting, User } from '@prisma/client';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import useSWR, { useSWRConfig } from 'swr';
@@ -9,8 +8,8 @@ import { BiArrowBack } from 'react-icons/bi'
 import { FiRepeat, FiShare } from 'react-icons/fi'
 import { FaRegComment } from 'react-icons/fa6'
 import Head from 'next/head';
-import Input from '@components/input';
 import { useForm } from 'react-hook-form';
+import Profile from '@components/profile';
 
 interface PostingWithUser extends Posting {
     user: User;
@@ -29,7 +28,6 @@ interface PostingDetailResponse {
 export default function PostingDetail() {
     const router = useRouter();
     const { handleSubmit, register } = useForm();
-    const { mutate } = useSWRConfig();
     const { data, mutate: boundMutate } = useSWR<PostingDetailResponse>(
         router.query.id ? `/api/tweet/${router.query.id}` : null);
     const [toggleFav] = useMutation(`/api/tweet/${router.query.id}/fav`)
@@ -41,7 +39,6 @@ export default function PostingDetail() {
     const onSubmit = (data: { reply?: string }) => {
         console.log("data", data)
     }
-    const ICON_SIZE = 30;
     return (
         <>
             <Head>
@@ -52,16 +49,8 @@ export default function PostingDetail() {
                 <div className='pb-3'>
                     <BiArrowBack size={30} />
                 </div>
+                <Profile name={data?.posting?.user?.name} id={data?.posting?.user?.id} />
 
-                <div className='flex space-x-2 space-y-2'  >
-                    <div className='w-16 h-16 bg-lime-200 rounded-full' />
-                    <div className='flex flex-col'>
-                        <span className='font-semibold text-lime-600'>{data?.posting?.user?.name.toUpperCase()}</span>
-                        <Link href={`/users/profiles/${data?.posting?.user.id}`}>
-                            <span className='text-zinc-400'>View Profile</span>
-                        </Link>
-                    </div>
-                </div>
 
                 <div className='p-4'>
 
